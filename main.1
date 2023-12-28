@@ -1,0 +1,97 @@
+#include <iostream>
+
+class Fraction {
+private:
+    int numerator;
+    int denominator;
+
+public:
+    Fraction(int num = 0, int den = 1) : numerator(num), denominator(den) {
+        if (denominator == 0) {
+            std::cerr << "Error: Denominator cannot be zero." << std::endl;
+            exit(1);
+        }
+    }
+
+    int getNumerator() const {
+        return numerator;
+    }
+
+    int getDenominator() const {
+        return denominator;
+    }
+
+    void input() {
+        std::cout << "Enter numerator: ";
+        std::cin >> numerator;
+
+        std::cout << "Enter denominator: ";
+        std::cin >> denominator;
+
+        if (denominator == 0) {
+            std::cerr << "Error: Denominator cannot be zero." << std::endl;
+            exit(1);
+        }
+    }
+
+    void display() const {
+        std::cout << numerator << "/" << denominator;
+    }
+
+    Fraction add(const Fraction& other) const {
+        int resultNumerator = numerator * other.denominator + other.numerator * denominator;
+        int resultDenominator = denominator * other.denominator;
+        return Fraction(resultNumerator, resultDenominator);
+    }
+
+    Fraction subtract(const Fraction& other) const {
+        int resultNumerator = numerator * other.denominator - other.numerator * denominator;
+        int resultDenominator = denominator * other.denominator;
+        return Fraction(resultNumerator, resultDenominator);
+    }
+
+    Fraction multiply(const Fraction& other) const {
+        int resultNumerator = numerator * other.numerator;
+        int resultDenominator = denominator * other.denominator;
+        return Fraction(resultNumerator, resultDenominator);
+    }
+
+    Fraction divide(const Fraction& other) const {
+        if (other.numerator == 0) {
+            std::cerr << "Error: Division by zero." << std::endl;
+            exit(1);
+        }
+
+        int resultNumerator = numerator * other.denominator;
+        int resultDenominator = denominator * other.numerator;
+        return Fraction(resultNumerator, resultDenominator);
+    }
+};
+
+int main() {
+    Fraction fraction1, fraction2, result;
+
+    std::cout << "Enter data for Fraction 1:" << std::endl;
+    fraction1.input();
+
+    std::cout << "\nEnter data for Fraction 2:" << std::endl;
+    fraction2.input();
+
+    result = fraction1.add(fraction2);
+    std::cout << "\nAddition: ";
+    result.display();
+
+    result = fraction1.subtract(fraction2);
+    std::cout << "\nSubtraction: ";
+    result.display();
+
+    result = fraction1.multiply(fraction2);
+    std::cout << "\nMultiplication: ";
+    result.display();
+
+    result = fraction1.divide(fraction2);
+    std::cout << "\nDivision: ";
+    result.display();
+
+    return 0;
+}
